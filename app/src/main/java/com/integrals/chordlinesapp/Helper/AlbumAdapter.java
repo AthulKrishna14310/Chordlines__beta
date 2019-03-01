@@ -46,6 +46,8 @@ private FirebaseActions firebaseActions;
                 .into(holder.CoverPic);
         holder.albumTitle.setText(albumModels.get(position).getAlbumName());
 
+
+
         holder.share_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +58,7 @@ private FirebaseActions firebaseActions;
         holder.download_album.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                firebaseActions.downloadVedio(albumModels.get(position).getDownloadLink());
+                firebaseActions.showDialogueForDownload(albumModels,position);
             }
         });
 

@@ -4,37 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     tools:context=".MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:navigationIcon="@drawable/ic_navigation_open"
             android:background="@color/toolbarColor"
+            app:navigationIcon="@drawable/ic_navigation_open"
             app:title="@string/toolbar_name"
-            app:titleTextColor="@color/toolbartextColor" >
+            app:titleTextColor="@color/toolbartextColor">
+
             <com.like.LikeButton
-                app:icon_type="heart"
-                android:layout_marginLeft="3dp"
-                app:icon_size="20dp"
-                android:onClick="addLikes"
-                app:dots_primary_color="@color/like_button_bubble_color"
                 android:id="@+id/like_button"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:onClick="addLikes"
+                app:dots_primary_color="@color/like_button_bubble_color"
+                app:icon_size="20dp"
+                app:icon_type="heart" />
 
         </android.support.v7.widget.Toolbar>
 
-        </android.support.design.widget.AppBarLayout>
+    </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_main" />
-
 
 
 </android.support.design.widget.CoordinatorLayout>

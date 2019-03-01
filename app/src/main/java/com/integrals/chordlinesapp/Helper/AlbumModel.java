@@ -6,22 +6,25 @@ public class AlbumModel {
     private String PublishedON;
     private String AlbumName;
     private String Details;
-    private String DownloadLink;
-    //
-    public AlbumModel(String coverPic,
-                      String youTubeLink,
-                      String publishedON,
+    private String DownloadLinkLow;
+    private String DownloadLinkMedium;
+    private String DownloadLinkHigh;
+    private String DownloadLinkAudio;
+
+    public AlbumModel(String coverPic, String youTubeLink, String publishedON,
                       String albumName,
-                      String details,
-                      String downloadLink) {
+                      String details, String downloadLinkLow,
+                      String downloadLinkMedium, String downloadLinkHigh, String downloadLinkAudio) {
         CoverPic = coverPic;
         YouTubeLink = youTubeLink;
         PublishedON = publishedON;
         AlbumName = albumName;
         Details = details;
-        DownloadLink = downloadLink;
+        DownloadLinkLow = downloadLinkLow;
+        DownloadLinkMedium = downloadLinkMedium;
+        DownloadLinkHigh = downloadLinkHigh;
+        DownloadLinkAudio = downloadLinkAudio;
     }
-
 
     public String getCoverPic() {
         return CoverPic;
@@ -63,11 +66,35 @@ public class AlbumModel {
         Details = details;
     }
 
-    public String getDownloadLink() {
-        return DownloadLink;
+    public String getDownloadLinkLow() {
+        return DownloadLinkLow;
     }
 
-    public void setDownloadLink(String downloadLink) {
-        DownloadLink = downloadLink;
+    public void setDownloadLinkLow(String downloadLinkLow) {
+        DownloadLinkLow = downloadLinkLow;
+    }
+
+    public String getDownloadLinkMedium() {
+        return DownloadLinkMedium;
+    }
+
+    public void setDownloadLinkMedium(String downloadLinkMedium) {
+        DownloadLinkMedium = downloadLinkMedium;
+    }
+
+    public String getDownloadLinkHigh() {
+        return DownloadLinkHigh;
+    }
+
+    public void setDownloadLinkHigh(String downloadLinkHigh) {
+        DownloadLinkHigh = downloadLinkHigh;
+    }
+
+    public String getDownloadLinkAudio() {
+        return DownloadLinkAudio;
+    }
+
+    public void setDownloadLinkAudio(String downloadLinkAudio) {
+        DownloadLinkAudio = downloadLinkAudio;
     }
 }
