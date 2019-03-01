@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFF</color>
+    <color name="colorPrimaryDark">#000</color>
+    <color name="toolbarColor">#FFFF</color>
+    <color name="toolbartextColor">#000</color>
+    <color name="toolbarColorTint">#000</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="cfdialogueColor">#dedee5</color>
+
+    <color name="navigation_text_header_color">#FFFF</color>
+    <color name="navigation_text_subtitle_color">#ededef</color>
+    <color name="like_button_bubble_color">#ad0101</color>
+    <color name="bottom_relative_layout_album_card">#ffff</color>
+    <color name="album_title">#0e0147</color>
+</resources>

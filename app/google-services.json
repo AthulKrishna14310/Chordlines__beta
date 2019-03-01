@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1039967156471",
+    "firebase_url": "https://chordlines-85db9.firebaseio.com",
+    "project_id": "chordlines-85db9",
+    "storage_bucket": "chordlines-85db9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1039967156471:android:4ffbd32f69b63649",
+        "android_client_info": {
+          "package_name": "com.integrals.chordlinesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1039967156471-44b5f10u1p26h3hqqnpte41pp06nkmig.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACnqS8Mhdv9uGRBZvmCE0DT-Frq2x3cqE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
