@@ -5,8 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -20,6 +19,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.chootdev.csnackbar.Align;
+import com.chootdev.csnackbar.Duration;
+import com.chootdev.csnackbar.Snackbar;
+import com.chootdev.csnackbar.Type;
 import com.crowdfire.cfalertdialog.CFAlertDialog;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity
     private LikeButton likeButton;
     private FirebaseActions firebaseActions;
     private DatabaseReference databaseReferenceCreateAlbum;
-    private DatabaseReference databaseReferenceLikes;
+    private DatabaseReference databaseReferenceMajor;
     private Toolbar toolbar;
     private RecyclerView recyclerView;
     private DatabaseReference databaseReferenceAlbumList;
@@ -63,7 +66,7 @@ public class MainActivity extends AppCompatActivity
 
         likeButton=(LikeButton)findViewById(R.id.like_button);
         databaseReferenceCreateAlbum=FirebaseDatabase.getInstance().getReference().child("Posts");
-        databaseReferenceLikes=FirebaseDatabase.getInstance().getReference();
+        databaseReferenceMajor=FirebaseDatabase.getInstance().getReference();
         databaseReferenceAlbumList=FirebaseDatabase.getInstance().getReference().child("Posts");
 
 
@@ -99,7 +102,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
 
 
-        databaseReferenceLikes.child("Likes").addValueEventListener(new ValueEventListener() {
+        databaseReferenceMajor.child("Likes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 toolbar.setSubtitle(dataSnapshot.getValue().toString().trim()+" likes__");
@@ -113,12 +116,12 @@ public class MainActivity extends AppCompatActivity
         likeButton.setOnLikeListener(new OnLikeListener() {
             @Override
             public void liked(LikeButton likeButton) {
-                firebaseActions.addLike(databaseReferenceLikes);
+                firebaseActions.addLike(databaseReferenceMajor);
             }
 
             @Override
             public void unLiked(LikeButton likeButton) {
-                firebaseActions.removeLike(databaseReferenceLikes);
+                firebaseActions.removeLike(databaseReferenceMajor);
             }
         });
 
@@ -165,8 +168,14 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
          if (id == R.id.nav_invite) {
-
-             firebaseActions.sentAppInviteLink();
+             Snackbar.with(activity,null)
+                     .type(Type.CUSTOM)
+                     .message("Loading App invite  link...")
+                     .duration(Duration.SHORT)
+                     .fillParent(true)
+                     .textAlign(Align.LEFT)
+                     .show();
+             firebaseActions.sentAppInviteLink(databaseReferenceMajor);
 
         } else if (id == R.id.nav_contact) {
 
@@ -190,7 +199,7 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if(id == R.id.nav_subscribe){
-             YoutubeActions youtubeActions= new YoutubeActions(getApplicationContext());
+             YoutubeActions youtubeActions= new YoutubeActions(getApplicationContext(),activity);
              youtubeActions.subscribeYoutubeChannel("UCvo6q3_ZBqUuJZ-g_eak1-Q");
 
 

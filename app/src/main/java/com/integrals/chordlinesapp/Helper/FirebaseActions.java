@@ -25,18 +25,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
-import com.google.firebase.messaging.FirebaseMessagingService;
-import com.google.firebase.messaging.RemoteMessage;
 import com.integrals.chordlinesapp.R;
 import com.karumi.dexter.Dexter;
-import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
 import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.util.ArrayList;
@@ -56,7 +50,24 @@ public class FirebaseActions {
 
     }
 
-    public void sentAppInviteLink() {
+    public void sentAppInviteLink(DatabaseReference databaseReference) {
+
+        databaseReference.child("AppLink").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String L = dataSnapshot.getValue().toString();
+                shareAppLink(L);
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+
+
     }
 
     public void addLike(DatabaseReference databaseReference) {
@@ -87,7 +98,6 @@ public class FirebaseActions {
         });
 
     }
-
 
     public void removeLike(DatabaseReference databaseReference) {
         final Boolean[] unLiked = {false};
@@ -166,6 +176,7 @@ public class FirebaseActions {
     }
 
     public void showDetails(String s) {
+
         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(activity)
                 .setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET)
                 .setTitle("Chordlines Music Production")
@@ -215,6 +226,14 @@ public class FirebaseActions {
         context.startActivity(SharingIntent);
 
         }
+    public void shareAppLink(String s) {
+        Intent SharingIntent = new Intent(Intent.ACTION_SEND);
+        SharingIntent.setType("text/plain");
+        SharingIntent.putExtra(Intent.EXTRA_TEXT, "Chordlines Music App Link" +"\n\n" + s);
+        SharingIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(SharingIntent);
+
+    }
 
     public void loadRecyclerView(DatabaseReference databaseReference, RecyclerView recyclerView) {
         albumModels=new ArrayList<>();
@@ -278,7 +297,7 @@ public class FirebaseActions {
                             ,AlbumName[0],Details[0],DownloadLinkLow[0],DownloadLinkMedium[0],DownloadLinkHigh[0],DownloadLinkAudio[0]));
 
                 }
-                AlbumAdapter albumAdapter=new AlbumAdapter(context,albumModels,thisClass);
+                AlbumAdapter albumAdapter=new AlbumAdapter(context,albumModels,thisClass,activity);
                 recyclerView.setAdapter(albumAdapter);
 
 

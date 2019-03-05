@@ -1,19 +1,33 @@
 package com.integrals.chordlinesapp.Helper;
 
+import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
+import com.chootdev.csnackbar.Align;
+import com.chootdev.csnackbar.Duration;
+import com.chootdev.csnackbar.Snackbar;
+import com.chootdev.csnackbar.Type;
+
 public class YoutubeActions {
     private Context context;
-
-    public YoutubeActions(Context context) {
+    private Activity activity;
+    public YoutubeActions(Context context,Activity activity) {
         this.context = context;
+        this.activity=activity;
     }
 
     public  void subscribeYoutubeChannel(String id) {
+        Snackbar.with(activity,null)
+                .type(Type.CUSTOM)
+                .message("Loading Youtube Link  link...")
+                .duration(Duration.SHORT)
+                .fillParent(true)
+                .textAlign(Align.LEFT)
+                .show();
         Intent webIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("http://www.youtube.com/channel/" + id));
         try {
@@ -24,6 +38,14 @@ public class YoutubeActions {
     }
 
     public  void watchYoutubeVideo(String id) {
+        Snackbar.with(activity,null)
+                .type(Type.CUSTOM)
+                .message("Loading Youtube Link  link...")
+                .duration(Duration.SHORT)
+                .fillParent(true)
+                .textAlign(Align.LEFT)
+                .show();
+
         Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(id));
         Intent webIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse(id));

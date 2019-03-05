@@ -1,5 +1,6 @@
 package com.integrals.chordlinesapp.Helper;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -12,6 +13,10 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.chootdev.csnackbar.Align;
+import com.chootdev.csnackbar.Duration;
+import com.chootdev.csnackbar.Snackbar;
+import com.chootdev.csnackbar.Type;
 import com.integrals.chordlinesapp.R;
 
 import java.util.List;
@@ -20,11 +25,13 @@ public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.AlbumViewHol
 private Context context;
 private List<AlbumModel> albumModels;
 private FirebaseActions firebaseActions;
-
-    public AlbumAdapter(Context context, List<AlbumModel> albumModels,FirebaseActions firebaseActions) {
+private Activity activity;
+    public AlbumAdapter(Context context, List<AlbumModel> albumModels,FirebaseActions firebaseActions,
+                        Activity activity) {
         this.context = context;
         this.firebaseActions=firebaseActions;
         this.albumModels = albumModels;
+        this.activity=activity;
         ///
     }
 
@@ -51,6 +58,13 @@ private FirebaseActions firebaseActions;
         holder.share_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Snackbar.with(activity,null)
+                        .type(Type.CUSTOM)
+                        .message("Loading Youtube link...")
+                        .duration(Duration.SHORT)
+                        .fillParent(true)
+                        .textAlign(Align.LEFT)
+                        .show();
 
                 firebaseActions.shareAlbumLink(albumModels.get(position).getYouTubeLink().toString());
                  }
@@ -71,14 +85,14 @@ private FirebaseActions firebaseActions;
         holder.CoverPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                YoutubeActions youtubeActions=new YoutubeActions(context);
+                YoutubeActions youtubeActions=new YoutubeActions(context,activity);
                 youtubeActions.watchYoutubeVideo(albumModels.get(position).getYouTubeLink().toString().trim());
             }
         });
         holder.play_album.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                YoutubeActions youtubeActions=new YoutubeActions(context);
+                YoutubeActions youtubeActions=new YoutubeActions(context,activity);
                 youtubeActions.watchYoutubeVideo(albumModels.get(position).getYouTubeLink().toString().trim());
             }
         });
