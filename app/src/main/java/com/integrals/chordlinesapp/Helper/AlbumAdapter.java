@@ -58,6 +58,7 @@ private Activity activity;
         holder.share_link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                holder.share_link.setBackgroundDrawable(context.getDrawable(R.drawable.ic_share_album_clicked));
                 Snackbar.with(activity,null)
                         .type(Type.CUSTOM)
                         .message("Loading Youtube link...")
@@ -65,20 +66,23 @@ private Activity activity;
                         .fillParent(true)
                         .textAlign(Align.LEFT)
                         .show();
+                 firebaseActions.shareAlbumLink(albumModels.get(position).getYouTubeLink().toString());
 
-                firebaseActions.shareAlbumLink(albumModels.get(position).getYouTubeLink().toString());
-                 }
+            }
         });
         holder.download_album.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                holder.download_album.setBackgroundDrawable(context.getDrawable(R.drawable.ic_download_album_clicked));
                 firebaseActions.showDialogueForDownload(albumModels,position);
             }
         });
 
         holder.album_details.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View view) {
+                holder.album_details.setBackgroundDrawable(context.getDrawable(R.drawable.ic_details_album_clicked));
                 firebaseActions.showDetails(albumModels.get(position).getDetails().toString().trim());
             }
         });

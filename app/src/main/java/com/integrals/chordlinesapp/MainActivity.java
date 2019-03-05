@@ -2,6 +2,8 @@ package com.integrals.chordlinesapp;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -182,11 +184,21 @@ public class MainActivity extends AppCompatActivity
 
              CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this)
                      .setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET)
-
-                      .setContentImageDrawable(R.drawable.ic_buisness_card__)
-                     .setDialogBackgroundColor(getResources().getColor(R.color.cfdialogueColor))
+                     .setContentImageDrawable(R.drawable.ic_buisness_card__)
+                     .setDialogBackgroundColor(getResources().getColor(R.color.cfdialoguecolorContact))
                      .setMessage("Devoloper-Email : athul.krishna14310@gmail.com")
-                     .addButton("  OK  ", -1, Color.BLUE, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
+                     .addButton(" SHARE CONTACT ", -1, Color.GRAY, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
+                         dialog.dismiss();
+                         Snackbar.with(activity,null)
+                                 .type(Type.CUSTOM)
+                                 .message("Loading Buisness card..")
+                                 .duration(Duration.SHORT)
+                                 .fillParent(true)
+                                 .textAlign(Align.LEFT)
+                                 .show();
+                         runOnUiThread(() -> firebaseActions.shareImage());
+                     })
+                     .addButton("  OK  ", -1, Color.GRAY, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
                          dialog.dismiss();
                      });
 
