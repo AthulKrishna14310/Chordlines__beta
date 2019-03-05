@@ -11,10 +11,14 @@ public class AlbumModel {
     private String DownloadLinkHigh;
     private String DownloadLinkAudio;
 
-    public AlbumModel(String coverPic, String youTubeLink, String publishedON,
+    public AlbumModel(String coverPic, String youTubeLink,
+                      String publishedON,
                       String albumName,
-                      String details, String downloadLinkLow,
-                      String downloadLinkMedium, String downloadLinkHigh, String downloadLinkAudio) {
+                      String details,
+                      String downloadLinkLow,
+                      String downloadLinkMedium,
+                      String downloadLinkHigh,
+                      String downloadLinkAudio) {
         CoverPic = coverPic;
         YouTubeLink = youTubeLink;
         PublishedON = publishedON;

@@ -182,14 +182,10 @@ public class MainActivity extends AppCompatActivity
 
              CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this)
                      .setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET)
-                     .setTitle("Chordlines Music Production")
 
-                     .setMessage("Contact us : \n\n"+
-                             " +918921407256 \n\n" +
-                             " +919539483289   " +
-                             "\n\n for all music services. \n\n Paytm and Google Pay accepted\n")
+                      .setContentImageDrawable(R.drawable.ic_buisness_card__)
                      .setDialogBackgroundColor(getResources().getColor(R.color.cfdialogueColor))
-                     .setIcon(R.drawable.logo_chordlines__)
+                     .setMessage("Devoloper-Email : athul.krishna14310@gmail.com")
                      .addButton("  OK  ", -1, Color.BLUE, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
                          dialog.dismiss();
                      });

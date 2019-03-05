@@ -24,7 +24,7 @@
                 android:id="@+id/like_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="80dp"
                 android:onClick="addLikes"
                 app:dots_primary_color="@color/like_button_bubble_color"
                 app:icon_size="20dp"

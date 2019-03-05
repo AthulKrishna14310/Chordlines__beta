@@ -56,10 +56,9 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/../logo_chordlines__.png" />
+                                      <entry key="assetType" value="IMAGE" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../bizcardmaker-com-theme-topline--dark-blue.jpg" />
                                       <entry key="outputName" value="play_album" />
-                                      <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="f9fdff" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -81,13 +80,34 @@
                                           </PersistentState>
                                         </value>
                                       </entry>
+                                      <entry key="foregroundImage">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="scalingPercent" value="77" />
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
+                                      <entry key="foregroundText">
+                                        <value>
+                                          <PersistentState>
+                                            <option name="values">
+                                              <map>
+                                                <entry key="trimmed" value="true" />
+                                              </map>
+                                            </option>
+                                          </PersistentState>
+                                        </value>
+                                      </entry>
                                     </map>
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="foregroundImage" value="$PROJECT_DIR$/../logo_chordlines__.png" />
-                                      <entry key="legacyIconShape" value="CIRCLE" />
-                                      <entry key="webIconShape" value="CIRCLE" />
+                                      <entry key="foregroundImage" value="$PROJECT_DIR$/../bizcardmaker-com-theme-topline--dark-blue.jpg" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -99,7 +119,9 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="$PROJECT_DIR$/../logo_chordlines__.png" />
+                                      <entry key="iconShape" value="HRECT" />
+                                      <entry key="imageAsset" value="$PROJECT_DIR$/../bizcardmaker-com-theme-topline--dark-blue.jpg" />
+                                      <entry key="outputName" value="ic_buisness_card" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -109,7 +131,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
+                            <entry key="outputIconType" value="LAUNCHER_LEGACY" />
                           </map>
                         </option>
                       </PersistentState>
