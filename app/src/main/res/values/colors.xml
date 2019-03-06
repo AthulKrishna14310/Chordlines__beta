@@ -7,6 +7,8 @@
     <color name="toolbarColorTint">#000</color>
     <color name="colorAccent">#D81B60</color>
     <color name="cfdialogueColor">#FFFF</color>
+    <color name="snackbarcolor">#dedee5</color>
+    <color name="snackbartext">#ad0101</color>
     <color name="cfdialoguecolorContact">#dedee5</color>
     <color name="navigation_text_header_color">#FFFF</color>
     <color name="navigation_text_subtitle_color">#ededef</color>

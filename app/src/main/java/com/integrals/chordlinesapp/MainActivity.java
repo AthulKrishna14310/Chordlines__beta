@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -35,6 +36,8 @@ import com.integrals.chordlinesapp.Helper.FirebaseActions;
 import com.integrals.chordlinesapp.Helper.YoutubeActions;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
+import com.nispok.snackbar.enums.SnackbarType;
+import com.nispok.snackbar.listeners.ActionClickListener;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -96,6 +99,18 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         firebaseActions.loadRecyclerView(databaseReferenceAlbumList,recyclerView);
+
+
+        com.nispok.snackbar.Snackbar.with(getApplicationContext())
+                .type(SnackbarType.SINGLE_LINE)
+                .duration(com.nispok.snackbar.Snackbar.SnackbarDuration.LENGTH_LONG)
+                .animation(true)
+                .color(Color.WHITE)
+                .textColor(Color.RED)
+                .actionColor(Color.BLUE)
+                .text("For \t.composing .lyrics .orchestra .sound mixing .mastering")
+                .actionLabel("Contact Us")
+                .actionListener(snackbar -> showContactDialogue()).show(activity);
         }
 
 
@@ -126,6 +141,12 @@ public class MainActivity extends AppCompatActivity
                 firebaseActions.removeLike(databaseReferenceMajor);
             }
         });
+
+
+
+
+
+
 
     }
 
@@ -180,33 +201,8 @@ public class MainActivity extends AppCompatActivity
              firebaseActions.sentAppInviteLink(databaseReferenceMajor);
 
         } else if (id == R.id.nav_contact) {
-
-
-             CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this)
-                     .setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET)
-                     .setContentImageDrawable(R.drawable.ic_buisness_card__)
-                     .setDialogBackgroundColor(getResources().getColor(R.color.cfdialoguecolorContact))
-                     .setMessage("Devoloper-Email : athul.krishna14310@gmail.com")
-                     .addButton(" SHARE CONTACT ", -1, Color.GRAY, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
-                         dialog.dismiss();
-                         Snackbar.with(activity,null)
-                                 .type(Type.CUSTOM)
-                                 .message("Loading Buisness card..")
-                                 .duration(Duration.SHORT)
-                                 .fillParent(true)
-                                 .textAlign(Align.LEFT)
-                                 .show();
-                         runOnUiThread(() -> firebaseActions.shareImage());
-                     })
-                     .addButton("  OK  ", -1, Color.GRAY, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
-                         dialog.dismiss();
-                     });
-
-
-             builder.show();
-
-
-        } else if(id == R.id.nav_subscribe){
+             showContactDialogue();
+          } else if(id == R.id.nav_subscribe){
              YoutubeActions youtubeActions= new YoutubeActions(getApplicationContext(),activity);
              youtubeActions.subscribeYoutubeChannel("UCvo6q3_ZBqUuJZ-g_eak1-Q");
 
@@ -220,4 +216,31 @@ public class MainActivity extends AppCompatActivity
     Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
 
     }
+
+    private void showContactDialogue(){
+        CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this)
+                .setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET)
+                .setContentImageDrawable(R.drawable.ic_buisness_card__)
+                .setDialogBackgroundColor(getResources().getColor(R.color.cfdialoguecolorContact))
+                .setMessage("Devoloper-Email : athul.krishna14310@gmail.com")
+                .addButton(" SHARE CONTACT ", -1, Color.GRAY, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
+                    dialog.dismiss();
+                    Snackbar.with(activity,null)
+                            .type(Type.CUSTOM)
+                            .message("Loading Buisness card..")
+                            .duration(Duration.SHORT)
+                            .fillParent(true)
+                            .textAlign(Align.LEFT)
+                            .show();
+                    runOnUiThread(() -> firebaseActions.shareImage());
+                })
+                .addButton("  OK  ", -1, Color.GRAY, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
+                    dialog.dismiss();
+                });
+
+
+        builder.show();
+
+    }
+
 }
