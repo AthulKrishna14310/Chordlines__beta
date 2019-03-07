@@ -39,6 +39,10 @@ import com.like.OnLikeListener;
 import com.nispok.snackbar.enums.SnackbarType;
 import com.nispok.snackbar.listeners.ActionClickListener;
 
+import io.github.tonnyl.light.Light;
+
+import static com.chootdev.csnackbar.Snackbar.show;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -99,19 +103,17 @@ public class MainActivity extends AppCompatActivity
     protected void onStart() {
         super.onStart();
         firebaseActions.loadRecyclerView(databaseReferenceAlbumList,recyclerView);
+        Light.info(recyclerView, "For our music services", Light.LENGTH_LONG)
 
+                .setActionTextColor(Color.WHITE)
+                .setAction("CONTACT", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        showContactDialogue();
+                    }
+                }).show();
 
-        com.nispok.snackbar.Snackbar.with(getApplicationContext())
-                .type(SnackbarType.SINGLE_LINE)
-                .duration(com.nispok.snackbar.Snackbar.SnackbarDuration.LENGTH_LONG)
-                .animation(true)
-                .color(Color.WHITE)
-                .textColor(Color.RED)
-                .actionColor(Color.BLUE)
-                .text("For \t.composing .lyrics .orchestra .sound mixing .mastering")
-                .actionLabel("Contact Us")
-                .actionListener(snackbar -> showContactDialogue()).show(activity);
-        }
+    }
 
 
     @Override
