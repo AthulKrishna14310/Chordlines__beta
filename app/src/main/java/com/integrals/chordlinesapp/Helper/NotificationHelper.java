@@ -66,7 +66,7 @@ public class NotificationHelper extends ContextWrapper {
                     .setWhen(System.currentTimeMillis())
                     .setContentIntent(pendingIntent)
                     .setLargeIcon(bitmap)
-                    .setSmallIcon(R.drawable.logo_chordlines__)
+                    .setSmallIcon(R.drawable.ic_notification_icon)
                     .setProgress(100, 0,true);
         }
 

@@ -42,7 +42,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     intent,
                     pendingIntent
             );
-            builder.setSmallIcon(R.drawable.logo_chordlines__);
+            builder.setSmallIcon(R.drawable.ic_notification_icon);
             builder.setLargeIcon(bitmap);
             builder.setAutoCancel(true);
             notificationHelper.getNotificationManager().notify(89,builder.build());
@@ -58,7 +58,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationBuilder.setContentTitle("Chordlines notification");
             notificationBuilder.setContentText(remoteMessage.getNotification().getBody());
             notificationBuilder.setAutoCancel(true);
-            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
+            notificationBuilder.setSmallIcon(R.drawable.ic_notification_icon);
             notificationBuilder.setContentIntent(pendingIntent);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(890, notificationBuilder.build());
