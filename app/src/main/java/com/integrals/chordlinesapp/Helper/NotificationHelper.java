@@ -7,6 +7,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 
@@ -14,10 +17,13 @@ import com.integrals.chordlinesapp.R;
 
 public class NotificationHelper extends ContextWrapper {
     private NotificationManager notificationManager;
-
+    private Bitmap bitmap;
 
     public NotificationHelper(Context base) {
         super(base);
+        Resources res = getApplicationContext().getResources();
+        int id = R.drawable.logo_chordlines__;
+        bitmap= BitmapFactory.decodeResource(res, id);
         createNotificationChannels();
 
     }
@@ -30,6 +36,7 @@ public class NotificationHelper extends ContextWrapper {
                 notificationChannel = new NotificationChannel("ID_503", "Chordlines ", NotificationManager.IMPORTANCE_HIGH);
                 notificationChannel.enableLights(true);
                 notificationChannel.enableLights(true);
+
                 notificationChannel.setSound(null, null);
                 notificationChannel.setLightColor(Color.WHITE);
                 notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
@@ -58,6 +65,7 @@ public class NotificationHelper extends ContextWrapper {
                     .setContentText(s)
                     .setWhen(System.currentTimeMillis())
                     .setContentIntent(pendingIntent)
+                    .setLargeIcon(bitmap)
                     .setSmallIcon(R.drawable.logo_chordlines__)
                     .setProgress(100, 0,true);
         }

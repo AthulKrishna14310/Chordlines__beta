@@ -5,8 +5,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.app.NotificationCompat;
-import android.widget.Toast;
+
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -19,7 +22,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        Toast.makeText(getApplicationContext(),"Received",Toast.LENGTH_SHORT).show();
 
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -29,6 +31,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
+            Resources res = getApplicationContext().getResources();
+            int id = R.drawable.logo_chordlines__;
+            Bitmap bitmap= BitmapFactory.decodeResource(res, id);
 
             notificationHelper=new NotificationHelper(getApplicationContext());
             Notification.Builder builder=notificationHelper.buildChordlineNotification(
@@ -37,7 +42,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     intent,
                     pendingIntent
             );
-            builder.setSmallIcon(R.mipmap.ic_launcher_round);
+            builder.setSmallIcon(R.drawable.logo_chordlines__);
+            builder.setLargeIcon(bitmap);
             builder.setAutoCancel(true);
             notificationHelper.getNotificationManager().notify(89,builder.build());
 
@@ -52,7 +58,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationBuilder.setContentTitle("Chordlines notification");
             notificationBuilder.setContentText(remoteMessage.getNotification().getBody());
             notificationBuilder.setAutoCancel(true);
-            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher);
+            notificationBuilder.setSmallIcon(R.mipmap.ic_launcher_round);
             notificationBuilder.setContentIntent(pendingIntent);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(890, notificationBuilder.build());
