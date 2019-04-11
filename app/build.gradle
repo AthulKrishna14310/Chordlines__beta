@@ -34,6 +34,9 @@ dependencies {
     implementation 'com.crowdfire.cfalertdialog:cfalertdialog:1.1.0'
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
     implementation 'io.github.tonnyl:light:1.0.0'
+
+    implementation 'com.github.varunest:sparkbutton:1.0.6'
+
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-database:16.0.6'
     implementation 'com.google.firebase:firebase-messaging:17.3.4'

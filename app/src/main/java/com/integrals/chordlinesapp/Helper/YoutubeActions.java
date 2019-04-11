@@ -30,6 +30,7 @@ public class YoutubeActions {
                 .show();
         Intent webIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse("http://www.youtube.com/channel/" + id));
+                webIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
            context.startActivity(webIntent);
         } catch (ActivityNotFoundException ex) {
@@ -49,6 +50,8 @@ public class YoutubeActions {
         Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(id));
         Intent webIntent = new Intent(Intent.ACTION_VIEW,
                 Uri.parse(id));
+        webIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        appIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         try {
             context.startActivity(appIntent);
         } catch (ActivityNotFoundException ex) {

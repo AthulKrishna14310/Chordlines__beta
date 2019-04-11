@@ -1,16 +1,12 @@
 package com.integrals.chordlinesapp;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,7 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
+import android.widget.ImageView;
 
 import com.chootdev.csnackbar.Align;
 import com.chootdev.csnackbar.Duration;
@@ -34,19 +30,15 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.integrals.chordlinesapp.Helper.FirebaseActions;
 import com.integrals.chordlinesapp.Helper.YoutubeActions;
-import com.like.LikeButton;
-import com.like.OnLikeListener;
-import com.nispok.snackbar.enums.SnackbarType;
-import com.nispok.snackbar.listeners.ActionClickListener;
+import com.varunest.sparkbutton.SparkButton;
+import com.varunest.sparkbutton.SparkEventListener;
 
 import io.github.tonnyl.light.Light;
-
-import static com.chootdev.csnackbar.Snackbar.show;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private LikeButton likeButton;
+
     private FirebaseActions firebaseActions;
     private DatabaseReference databaseReferenceCreateAlbum;
     private DatabaseReference databaseReferenceMajor;
@@ -54,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     private RecyclerView recyclerView;
     private DatabaseReference databaseReferenceAlbumList;
     private Activity activity;
+    private SparkButton sparkButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,20 +66,10 @@ public class MainActivity extends AppCompatActivity
         recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
 
-        likeButton=(LikeButton)findViewById(R.id.like_button);
         databaseReferenceCreateAlbum=FirebaseDatabase.getInstance().getReference().child("Posts");
         databaseReferenceMajor=FirebaseDatabase.getInstance().getReference();
         databaseReferenceAlbumList=FirebaseDatabase.getInstance().getReference().child("Posts");
-
-
-        SharedPreferences sharedPreferences=getSharedPreferences("Liked.pref",MODE_PRIVATE);
-        Boolean Index=sharedPreferences.getBoolean("Index::",false);
-        if(Index==false){
-        likeButton.setLiked(false);
-        }else {
-
-            likeButton.setLiked(true);
-        }
+        sparkButton=(SparkButton)findViewById(R.id.spark_button);
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -109,11 +92,33 @@ public class MainActivity extends AppCompatActivity
                 .setAction("CONTACT", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        showContactDialogue();
+                        showContactDialogue("");
                     }
                 }).show();
 
+            sparkButton.setEventListener(new SparkEventListener(){
+            @Override
+            public void onEvent(ImageView button, boolean buttonState) {
+                if (buttonState) {
+
+               firebaseActions.addLike(databaseReferenceMajor);
+                      } else {
+                firebaseActions.removeLike(databaseReferenceMajor);
+                }
+            }
+
+            @Override
+            public void onEventAnimationEnd(ImageView button, boolean buttonState) {
+
+            }
+
+            @Override
+            public void onEventAnimationStart(ImageView button, boolean buttonState) {
+
+            }
+        });
     }
+
 
 
     @Override
@@ -132,19 +137,6 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-        likeButton.setOnLikeListener(new OnLikeListener() {
-            @Override
-            public void liked(LikeButton likeButton) {
-                firebaseActions.addLike(databaseReferenceMajor);
-            }
-
-            @Override
-            public void unLiked(LikeButton likeButton) {
-                firebaseActions.removeLike(databaseReferenceMajor);
-            }
-        });
-
-
 
 
 
@@ -164,7 +156,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
+/*    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
@@ -186,7 +178,7 @@ public class MainActivity extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
+*/
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -203,7 +195,7 @@ public class MainActivity extends AppCompatActivity
              firebaseActions.sentAppInviteLink(databaseReferenceMajor);
 
         } else if (id == R.id.nav_contact) {
-             showContactDialogue();
+             showContactDialogue("Devoloper E-mail: integrals.athulkrishna@gmail.com");
           } else if(id == R.id.nav_subscribe){
              YoutubeActions youtubeActions= new YoutubeActions(getApplicationContext(),activity);
              youtubeActions.subscribeYoutubeChannel("UCvo6q3_ZBqUuJZ-g_eak1-Q");
@@ -214,18 +206,15 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public void addLikes(View view) {
-    Toast.makeText(getApplicationContext(),"Clicked",Toast.LENGTH_SHORT).show();
 
-    }
 
-    private void showContactDialogue(){
+    private void showContactDialogue(String d){
         CFAlertDialog.Builder builder = new CFAlertDialog.Builder(this)
                 .setDialogStyle(CFAlertDialog.CFAlertStyle.BOTTOM_SHEET)
-                .setContentImageDrawable(R.drawable.ic_buisness_card__)
+                .setContentImageDrawable(R.drawable.buisness_card)
                 .setDialogBackgroundColor(getResources().getColor(R.color.cfdialoguecolorContact))
-                .setMessage("Devoloper-Email : athul.krishna14310@gmail.com")
-                .addButton(" SHARE CONTACT ", -1, Color.GRAY, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
+                .setMessage(" "+d)
+                .addButton(" SHARE CONTACT ", -1, Color.BLUE, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
                     dialog.dismiss();
                     Snackbar.with(activity,null)
                             .type(Type.CUSTOM)
@@ -234,9 +223,14 @@ public class MainActivity extends AppCompatActivity
                             .fillParent(true)
                             .textAlign(Align.LEFT)
                             .show();
-                    runOnUiThread(() -> firebaseActions.shareImage());
+                    dialog.dismiss();
+                    firebaseActions.shareImage();
+                })
+                .addButton("SHARE APP",-1,Color.BLUE,CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
+                    firebaseActions.sentAppInviteLink(databaseReferenceMajor);
                 })
                 .addButton("  OK  ", -1, Color.GRAY, CFAlertDialog.CFAlertActionStyle.POSITIVE, CFAlertDialog.CFAlertActionAlignment.CENTER, (dialog, which) -> {
+
                     dialog.dismiss();
                 });
 

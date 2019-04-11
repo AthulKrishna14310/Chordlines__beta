@@ -12,10 +12,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.DeadObjectException;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
@@ -38,6 +40,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -235,21 +238,25 @@ public class FirebaseActions {
         }
 
         public void shareImage(){
+                Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.buisness_card_hd);
+                String bitmapPath = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap,"title", null);
+                Uri bitmapUri = Uri.parse(bitmapPath);
 
-            Bitmap b =BitmapFactory.decodeResource(context.getResources(),R.drawable.buisness_card_hd);
-            Intent share = new Intent(Intent.ACTION_SEND);
-            share.setType("image/jpeg");
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+                else
+                    shareIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-            ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-            b.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-            String path = MediaStore.Images.Media.insertImage(context.getContentResolver(),
-                    b, "Chordlines Buisness card", null);
-            Uri imageUri =  Uri.parse(path);
-            share.putExtra(Intent.EXTRA_STREAM, imageUri);
+                shareIntent.setType("image/*");
 
-            context.startActivity(Intent.createChooser(share, "Select"));
+                // For a file in shared storage.  For data in private storage, use a ContentProvider.
+                shareIntent.putExtra(Intent.EXTRA_STREAM, bitmapUri);
+                context.startActivity(shareIntent);
 
-        }
+                }
+
+
 
     public void shareAppLink(String s) {
 
@@ -349,50 +356,25 @@ public class FirebaseActions {
                     public void onClick(DialogInterface dialogInterface, int i) {
                    switch (i){
                        case 0:
-                           dialogInterface.dismiss();
-                           Snackbar.with(activity,null)
-                                 .type(Type.SUCCESS)
-                                 .message("High Quality..")
-                                 .duration(Duration.SHORT)
-                                 .fillParent(true)
-                                 .textAlign(Align.LEFT)
-                                 .show();
-                           download(albumModels.get(position).getDownloadLinkHigh().toString(),".mp4");
+                           createALertDialogue(dialogInterface,
+                                   albumModels.get(position).getDownloadLinkHigh().toString(),".mp4","high quality");
+
+
                          break;
 
                        case 1:
-                           dialogInterface.dismiss();
-                           Snackbar.with(activity,null)
-                                   .type(Type.SUCCESS)
-                                   .message("Medium Quality..")
-                                   .duration(Duration.SHORT)
-                                   .fillParent(true)
-                                   .textAlign(Align.LEFT)
-                                   .show();
-                           download(albumModels.get(position).getDownloadLinkMedium().toString(),".mp4");
+                           createALertDialogue(dialogInterface,
+                                   albumModels.get(position).getDownloadLinkMedium().toString(),".mp4","medium quality");
 
                            break;
                        case 2:
-                           dialogInterface.dismiss();
-                           Snackbar.with(activity,null)
-                                   .type(Type.SUCCESS)
-                                   .message("Low Quality..")
-                                   .duration(Duration.SHORT)
-                                   .fillParent(true)
-                                   .textAlign(Align.LEFT)
-                                   .show();
-                           download(albumModels.get(position).getDownloadLinkLow().toString(),".mp4");
+                           createALertDialogue(dialogInterface,
+                                   albumModels.get(position).getDownloadLinkLow().toString(),".mp4","low quality");
                            break;
                        case 3:
-                           dialogInterface.dismiss();
-                           Snackbar.with(activity,null)
-                                   .type(Type.SUCCESS)
-                                   .message("Audio Quality..")
-                                   .duration(Duration.SHORT)
-                                   .fillParent(true)
-                                   .textAlign(Align.LEFT)
-                                   .show();
-                           download(albumModels.get(position).getDownloadLinkAudio().toString(),".mp3");
+                           createALertDialogue(dialogInterface,
+                                   albumModels.get(position).getDownloadLinkAudio().toString(),".mp3","audio");
+
                            break;
                            }
 
@@ -410,5 +392,43 @@ public class FirebaseActions {
 
 
 
+    }
+
+    private void createALertDialogue(
+
+            DialogInterface dialogInterface, String string, String s,String quality){
+        AlertDialog.Builder builder1 = new AlertDialog.Builder(activity);
+        builder1.setMessage("Start download ?.");
+        builder1.setCancelable(true);
+
+        builder1.setPositiveButton(
+                "Yes",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        dialogInterface.dismiss();
+                        download(string,s);
+                        Snackbar.with(activity,null)
+                                .type(Type.SUCCESS)
+                                .message("Downloading "+ quality)
+                                .duration(Duration.SHORT)
+                                .fillParent(true)
+                                .textAlign(Align.LEFT)
+                                .show();
+
+                    }
+                });
+
+        builder1.setNegativeButton(
+                "No",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        dialogInterface.cancel();
+                    }
+                });
+
+        AlertDialog alert11 = builder1.create();
+        alert11.show();
     }
 }
